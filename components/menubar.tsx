@@ -2,14 +2,12 @@
 
 import {
   Menubar,
-  MenubarCheckboxItem,
   MenubarContent,
   MenubarItem,
   MenubarMenu,
   MenubarRadioGroup,
   MenubarRadioItem,
   MenubarSeparator,
-  MenubarShortcut,
   MenubarSub,
   MenubarSubContent,
   MenubarSubTrigger,
@@ -52,7 +50,7 @@ export function CustomMenubar() {
                   typeof window !== "undefined"
                     ? localStorage.getItem("recentCharacters")
                     : null;
-                const items = recentRaw ? JSON.parse(recentRaw) : [];
+                const items: string[] = recentRaw ? JSON.parse(recentRaw) : [];
 
                 if (items.length === 0) {
                   return (
@@ -66,10 +64,14 @@ export function CustomMenubar() {
 
                 return (
                   <>
-                    {items.map((ch: any, i: number) => {
-                      ch = characters.find((c) => c.slug === ch) || ch;
-                      const id = ch.id ?? ch.slug ?? ch.name ?? `char-${i}`;
-                      const label = ch.name ?? ch;
+                    {items.map((ch: string, i: number) => {
+                      const new_ch = characters.find((c) => c.slug === ch) || {
+                        id: ch,
+                        slug: ch,
+                        name: ch,
+                      };
+                      const id = new_ch.slug ?? new_ch.name ?? `char-${i}`;
+                      const label = new_ch.name ?? new_ch;
                       return (
                         <MenubarItem
                           key={id}

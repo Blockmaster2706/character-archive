@@ -5,7 +5,6 @@ import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useTheme } from "next-themes";
-import { parseGenericCharacter } from "../character-parser";
 import { putCharacterInLocalstorage } from "../localstorage";
 import { Card, CardContent } from "@/components/ui/card";
 import TypingText from "@/components/ui/shadcn-io/typing-text";
@@ -20,13 +19,11 @@ import Image from "next/image";
 export default function PR3_1Page() {
   const router = useRouter();
   const { theme, setTheme } = useTheme();
-  const [characterData, setCharacterData] = useState<string>("");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [originalTheme, setOriginalTheme] = useState<string | undefined>();
 
   const name = "Name";
-  const accentColor = "red-l-900";
 
   // Force dark mode on this page, but preserve original theme
   useEffect(() => {
@@ -92,91 +89,91 @@ export default function PR3_1Page() {
     }
   };
 
-  // Parse character sheet into sections
-  const parseCharacterSections = (text: string) => {
-    // Extract Name section
-    const nameMatch = text.match(/Name\s+([^『]+)/);
-    if (nameMatch)
-      setNameSection(
-        nameMatch[1]
-          .trim()
-          .replace(/\[.*?\]/, "")
-          .trim()
-      );
-
-    const caelesteNameMatch = text.match(/Name\s*\[([^\]]+)\]/);
-    if (caelesteNameMatch) setCaelesteName(caelesteNameMatch[1].trim());
-
-    // Extract Basic Info section
-    const basicInfoMatch = text.match(/『Basic Info』([\s\S]*?)(?=『|$)/);
-    if (basicInfoMatch) {
-      const parsed = parseSectionContent(basicInfoMatch[1]);
-      if (typeof parsed === "object") setBasicInfoSection(parsed);
-    }
-
-    // Extract Caeleste section (single arrow)
-    const caelesteMatch = text.match(/『Caeleste』([\s\S]*?)(?=『|$)/);
-    if (caelesteMatch) {
-      const parsed = parseSectionContent(caelesteMatch[1]);
-      if (typeof parsed === "string") setCaelesteSection(parsed);
-    }
-
-    // Extract Aussehen section
-    const aussehenMatch = text.match(/『Aussehen』([\s\S]*?)(?=『|$)/);
-    if (aussehenMatch) {
-      const parsed = parseSectionContent(aussehenMatch[1]);
-      if (typeof parsed === "object") setAussehenSection(parsed);
-    }
-
-    // Extract Inventar section (single arrow)
-    const inventarMatch = text.match(/『Inventar』([\s\S]*?)(?=『|$)/);
-    if (inventarMatch) {
-      const parsed = parseSectionContent(inventarMatch[1]);
-      if (typeof parsed === "string") setInventarSection(parsed);
-    }
-
-    // Extract Kleidung section
-    const kleidungMatch = text.match(/『Kleidung』([\s\S]*?)(?=『|$)/);
-    if (kleidungMatch) {
-      const parsed = parseSectionContent(kleidungMatch[1]);
-      if (typeof parsed === "object") setKleidungSection(parsed);
-    }
-
-    // Extract Persönlichkeit section (single arrow)
-    const persoenlichkeitMatch = text.match(
-      /『Persönlichkeit』([\s\S]*?)(?=『|$)/
-    );
-    if (persoenlichkeitMatch) {
-      const parsed = parseSectionContent(persoenlichkeitMatch[1]);
-      if (typeof parsed === "string") setPersoenlichkeitSection(parsed);
-    }
-
-    // Extract Persönlichkeitsmerkmale section
-    const persoenlichkeitsmerkmaleMatch = text.match(
-      /『Persönlichkeitsmerkmale』([\s\S]*?)(?=『|$)/
-    );
-    if (persoenlichkeitsmerkmaleMatch) {
-      const parsed = parseSectionContent(persoenlichkeitsmerkmaleMatch[1]);
-      if (typeof parsed === "object")
-        setPersoenlichkeitsmerkmaleSection(parsed);
-    }
-
-    // Extract Geschichte section (single arrow)
-    const geschichteMatch = text.match(/『Geschichte』([\s\S]*?)(?=『|$)/);
-    if (geschichteMatch) {
-      const parsed = parseSectionContent(geschichteMatch[1]);
-      if (typeof parsed === "string") setGeschichteSection(parsed);
-    }
-
-    // Extract Beziehungen section (single arrow)
-    const beziehungenMatch = text.match(/『Beziehungen』([\s\S]*?)(?=『|$)/);
-    if (beziehungenMatch) {
-      const parsed = parseSectionContent(beziehungenMatch[1]);
-      if (typeof parsed === "string") setBeziehungenSection(parsed);
-    }
-  };
-
   useEffect(() => {
+    // Parse character sheet into sections
+    const parseCharacterSections = (text: string) => {
+      // Extract Name section
+      const nameMatch = text.match(/Name\s+([^『]+)/);
+      if (nameMatch)
+        setNameSection(
+          nameMatch[1]
+            .trim()
+            .replace(/\[.*?\]/, "")
+            .trim()
+        );
+
+      const caelesteNameMatch = text.match(/Name\s*\[([^\]]+)\]/);
+      if (caelesteNameMatch) setCaelesteName(caelesteNameMatch[1].trim());
+
+      // Extract Basic Info section
+      const basicInfoMatch = text.match(/『Basic Info』([\s\S]*?)(?=『|$)/);
+      if (basicInfoMatch) {
+        const parsed = parseSectionContent(basicInfoMatch[1]);
+        if (typeof parsed === "object") setBasicInfoSection(parsed);
+      }
+
+      // Extract Caeleste section (single arrow)
+      const caelesteMatch = text.match(/『Caeleste』([\s\S]*?)(?=『|$)/);
+      if (caelesteMatch) {
+        const parsed = parseSectionContent(caelesteMatch[1]);
+        if (typeof parsed === "string") setCaelesteSection(parsed);
+      }
+
+      // Extract Aussehen section
+      const aussehenMatch = text.match(/『Aussehen』([\s\S]*?)(?=『|$)/);
+      if (aussehenMatch) {
+        const parsed = parseSectionContent(aussehenMatch[1]);
+        if (typeof parsed === "object") setAussehenSection(parsed);
+      }
+
+      // Extract Inventar section (single arrow)
+      const inventarMatch = text.match(/『Inventar』([\s\S]*?)(?=『|$)/);
+      if (inventarMatch) {
+        const parsed = parseSectionContent(inventarMatch[1]);
+        if (typeof parsed === "string") setInventarSection(parsed);
+      }
+
+      // Extract Kleidung section
+      const kleidungMatch = text.match(/『Kleidung』([\s\S]*?)(?=『|$)/);
+      if (kleidungMatch) {
+        const parsed = parseSectionContent(kleidungMatch[1]);
+        if (typeof parsed === "object") setKleidungSection(parsed);
+      }
+
+      // Extract Persönlichkeit section (single arrow)
+      const persoenlichkeitMatch = text.match(
+        /『Persönlichkeit』([\s\S]*?)(?=『|$)/
+      );
+      if (persoenlichkeitMatch) {
+        const parsed = parseSectionContent(persoenlichkeitMatch[1]);
+        if (typeof parsed === "string") setPersoenlichkeitSection(parsed);
+      }
+
+      // Extract Persönlichkeitsmerkmale section
+      const persoenlichkeitsmerkmaleMatch = text.match(
+        /『Persönlichkeitsmerkmale』([\s\S]*?)(?=『|$)/
+      );
+      if (persoenlichkeitsmerkmaleMatch) {
+        const parsed = parseSectionContent(persoenlichkeitsmerkmaleMatch[1]);
+        if (typeof parsed === "object")
+          setPersoenlichkeitsmerkmaleSection(parsed);
+      }
+
+      // Extract Geschichte section (single arrow)
+      const geschichteMatch = text.match(/『Geschichte』([\s\S]*?)(?=『|$)/);
+      if (geschichteMatch) {
+        const parsed = parseSectionContent(geschichteMatch[1]);
+        if (typeof parsed === "string") setGeschichteSection(parsed);
+      }
+
+      // Extract Beziehungen section (single arrow)
+      const beziehungenMatch = text.match(/『Beziehungen』([\s\S]*?)(?=『|$)/);
+      if (beziehungenMatch) {
+        const parsed = parseSectionContent(beziehungenMatch[1]);
+        if (typeof parsed === "string") setBeziehungenSection(parsed);
+      }
+    };
+
     putCharacterInLocalstorage("pr3_1");
 
     const fetchCharacterData = async () => {
@@ -206,14 +203,8 @@ export default function PR3_1Page() {
         console.log("Received raw text length:", data.length);
         console.log("Received raw text preview:", data.text.substring(0, 200));
 
-        // Parse the raw text using the character-specific parser
-        const { parseCharacterDocument } = await import("../character-parser");
-        const formattedHTML = parseGenericCharacter(data.text, name);
-
         // Parse into individual sections
         parseCharacterSections(data.text);
-
-        setCharacterData(formattedHTML);
       } catch (err) {
         console.error("Fetch error:", err);
         setError(

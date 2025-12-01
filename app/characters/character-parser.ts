@@ -20,7 +20,7 @@ export function parseVesperCharacter(rawText: string): string {
   let formattedHTML = `<h1 class="text-3xl font-bold text-green-500 mb-6">Vesper Davis</h1>\n`;
 
   // Clean up the content and remove the header stuff
-  let content = characterContent
+  const content = characterContent
     .replace("Vesper Davis", "")
     .replace("Leiterbahn", "")
     .trim();
@@ -170,7 +170,7 @@ export function parseCharacterDocument(
   let formattedHTML = `<h1 class="text-3xl font-bold text-green-500 mb-6">${characterName}</h1>\n`;
 
   // Clean up the content
-  let content = rawText.trim();
+  const content = rawText.trim();
 
   // Split content into parts using section headers (『』 brackets)
   const parts = content.split(/(『[^』]+』)/);

@@ -30,7 +30,7 @@ export async function POST(request: NextRequest) {
       console.log("Looking for character:", characterName);
 
       // Step 1: Remove JavaScript completely first
-      let cleanHtml = html
+      const cleanHtml = html
         .replace(/<script[^>]*>[\s\S]*?<\/script>/gi, "")
         .replace(/<style[^>]*>[\s\S]*?<\/style>/gi, "");
 
