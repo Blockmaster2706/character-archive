@@ -120,3 +120,46 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* Custom styles for Google Docs content */
+.google-docs-content {
+  @apply space-y-6;
+}
+
+.google-docs-content h1 {
+  @apply text-3xl font-bold text-green-500 mb-4;
+}
+
+.google-docs-content h2 {
+  @apply text-2xl font-bold text-green-400 mb-3 mt-6;
+}
+
+.google-docs-content h3 {
+  @apply text-xl font-semibold mb-2 mt-4;
+}
+
+.google-docs-content p {
+  @apply mb-4 leading-relaxed;
+}
+
+.google-docs-content strong {
+  @apply font-semibold text-foreground;
+}
+
+.google-docs-content ul,
+.google-docs-content ol {
+  @apply ml-6 mb-4 space-y-1;
+}
+
+.google-docs-content li {
+  @apply leading-relaxed;
+}
+
+.google-docs-content div {
+  @apply mb-2;
+}
+
+/* Style sections that start with 『 */
+.google-docs-content div:has(> span:first-child) span:first-child {
+  @apply text-2xl font-bold text-green-500 block mb-4;
+}
