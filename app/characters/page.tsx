@@ -4,19 +4,10 @@ import { CustomMenubar } from "@/components/menubar";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { characters } from "./characters";
 
 export default function Home() {
   const router = useRouter();
-
-  const characters = [
-    {
-      name: "Vesper",
-      slug: "vesper",
-      image: "/images/characters/unnamed.png",
-    },
-    { name: "Bram", slug: "bram", image: "/images/characters/unnamed.png" },
-    { name: "Cora", slug: "cora", image: "/images/characters/unnamed.png" },
-  ];
 
   return (
     <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">

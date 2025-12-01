@@ -17,6 +17,7 @@ import {
 } from "@/components/ui/menubar";
 import { ModeToggle } from "./mode-toggle";
 import { useRouter } from "next/navigation";
+import { characters } from "@/app/characters/characters";
 
 export function CustomMenubar() {
   const router = useRouter();
@@ -51,8 +52,7 @@ export function CustomMenubar() {
                   typeof window !== "undefined"
                     ? localStorage.getItem("recentCharacters")
                     : null;
-                const recent = recentRaw ? JSON.parse(recentRaw) : [];
-                const items = recent.slice(0, 3);
+                const items = recentRaw ? JSON.parse(recentRaw) : [];
 
                 if (items.length === 0) {
                   return (
@@ -67,6 +67,7 @@ export function CustomMenubar() {
                 return (
                   <>
                     {items.map((ch: any, i: number) => {
+                      ch = characters.find((c) => c.slug === ch) || ch;
                       const id = ch.id ?? ch.slug ?? ch.name ?? `char-${i}`;
                       const label = ch.name ?? ch;
                       return (
@@ -95,14 +96,10 @@ export function CustomMenubar() {
             onClick={() => {
               switch (characterSlug) {
                 case "vesper":
-                  window.open(
-                    "https://docs.google.com/document/d/1XTCn4Ix0wWs6R--mV2VWMM5wGhxvNn9TZuja5x707iA/edit?usp=sharing",
-                    "_blank"
-                  );
-                  break;
                 case "pr3_1":
                   window.open(
-                    "https://docs.google.com/document/d/1etQvt51cb8_IZ1aFwcWLfETJTXHkS7i9bvBldr27i-E/edit?usp=sharing",
+                    characters.find((c) => c.slug === characterSlug)?.doclink ||
+                      "",
                     "_blank"
                   );
                   break;
@@ -120,18 +117,15 @@ export function CustomMenubar() {
         <MenubarTrigger>Charaktere</MenubarTrigger>
         <MenubarContent>
           <MenubarRadioGroup value={characterSlug}>
-            <MenubarRadioItem
-              onSelect={() => router.push("/characters/pr3_1")}
-              value="pr3_1"
-            >
-              PR3_1
-            </MenubarRadioItem>
-            <MenubarRadioItem
-              onSelect={() => router.push("/characters/vesper")}
-              value="vesper"
-            >
-              Vesper Davis [DEMO]
-            </MenubarRadioItem>
+            {characters.map((c) => (
+              <MenubarRadioItem
+                key={c.slug}
+                onSelect={() => router.push(`/characters/${c.slug}`)}
+                value={c.slug}
+              >
+                {c.name}
+              </MenubarRadioItem>
+            ))}
           </MenubarRadioGroup>
         </MenubarContent>
       </MenubarMenu>

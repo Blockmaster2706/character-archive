@@ -4,15 +4,46 @@ import { CustomMenubar } from "@/components/menubar";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { useTheme } from "next-themes";
 import { parseGenericCharacter } from "../character-parser";
+import { putCharacterInLocalstorage } from "../localstorage";
+import { Card, CardContent } from "@/components/ui/card";
+import TypingText from "@/components/ui/shadcn-io/typing-text";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+} from "@/components/ui/carousel";
+import Autoplay from "embla-carousel-autoplay";
+import Image from "next/image";
 
-export default function VesperPage() {
+export default function PR3_1Page() {
   const router = useRouter();
+  const { theme, setTheme } = useTheme();
   const [characterData, setCharacterData] = useState<string>("");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [originalTheme, setOriginalTheme] = useState<string | undefined>();
 
   const name = "Name";
+  const accentColor = "red-l-900";
+
+  // Force dark mode on this page, but preserve original theme
+  useEffect(() => {
+    // Store the original theme when component mounts
+    if (theme && !originalTheme) {
+      setOriginalTheme(theme);
+    }
+    // Set to dark mode
+    setTheme("dark");
+
+    // Restore original theme when component unmounts
+    return () => {
+      if (originalTheme) {
+        setTheme(originalTheme);
+      }
+    };
+  }, [theme, setTheme, originalTheme]);
 
   // Character section states
   const [nameSection, setNameSection] = useState<string>("");
@@ -146,6 +177,8 @@ export default function VesperPage() {
   };
 
   useEffect(() => {
+    putCharacterInLocalstorage("pr3_1");
+
     const fetchCharacterData = async () => {
       try {
         setLoading(true);
@@ -194,6 +227,31 @@ export default function VesperPage() {
     fetchCharacterData();
   }, []);
 
+  const [showAnimation, setShowAnimation] = useState(false);
+  const [showSheet, setShowSheet] = useState(false);
+  const animationContent: string = `Ein leises Knistern erfüllt die Luft.
+Ein Blatt segelt durch den Abendwind.
+Die Gestalt hebt den Blick und lächelt im Halbdunkel.
+Langsam öffnet sich ein altes Buch, und Worte fließen hervor.
+Ein kurzer Augenblick — dann breitet sich die Szenerie vor dir aus.`;
+
+  useEffect(() => {
+    setTimeout(() => {
+      setShowAnimation(true);
+    }, 100);
+    setTimeout(() => {
+      setShowSheet(true);
+    }, 20500);
+  }, []);
+
+  const imagesArray = [
+    "/images/characters/pr3_1/1.jpg",
+    "/images/characters/pr3_1/2.jpg",
+    "/images/characters/pr3_1/3.jpg",
+    "/images/characters/pr3_1/4.jpg",
+    "/images/characters/pr3_1/5.jpg",
+  ];
+
   if (loading) {
     return (
       <div className="font-sans min-h-screen p-8 pb-20 gap-16 sm:p-20">
@@ -207,9 +265,15 @@ export default function VesperPage() {
               ← Zurück zu Charakteren
             </Button>
           </div>
-          <div className="text-center py-12">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-500 mx-auto mb-4"></div>
-            <p>Lade Charakterdaten...</p>
+
+          <div
+            className={`${
+              loading ? "opacity-100 pointer-events-none" : "opacity-0"
+            } absolute top-0 left-0 w-screen h-screen bg-black transition-opacity duration-300 z-50`}
+          >
+            <div className="flex items-center justify-center h-full">
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-zinc-500"></div>
+            </div>
           </div>
         </main>
       </div>
@@ -248,9 +312,33 @@ export default function VesperPage() {
   }
 
   return (
-    <div className="font-sans min-h-screen p-8 pb-20 gap-16 sm:p-20">
+    <div className="font-sans min-h-screen p-8 pb-20 gap-16 sm:p-20 bg-orange-950">
       <CustomMenubar />
-      <main className="max-w-4xl mx-auto mt-8">
+      <main className="max-w-4xl mx-auto mt-8 z-0">
+        <div
+          className={`absolute top-16 sm:top-20 left-0 w-full h-screen bg-orange-950 transition-opacity duration-1000 ${
+            !showSheet
+              ? `opacity-100 z-40 pointer-events-auto`
+              : "opacity-0 -z-50 pointer-events-none"
+          }`}
+        >
+          {showAnimation && !showSheet && (
+            <div className="animate-fade-out pointer-events-none p-8 sm:p-20 h-screen">
+              <Card className="p-6 bg-black/10 backdrop-blur-sm">
+                <div className="text-lg font-mono flex items-center gap-2">
+                  <span>
+                    <TypingText text={animationContent}></TypingText>
+                  </span>
+                </div>
+              </Card>
+            </div>
+          )}
+        </div>
+        <div
+          className={`opacity-100 ${
+            loading ? "pointer-events-none z-50" : "opacity-0 -z-50"
+          } absolute top-0 left-0 w-screen h-screen bg-gray-900 transition-opacity duration-500`}
+        ></div>
         <div className="mb-6">
           <Button variant="outline" onClick={() => router.push("/characters")}>
             ← Zurück zu Charakteren
@@ -258,34 +346,48 @@ export default function VesperPage() {
         </div>
 
         <div className="space-y-8">
-          <header className="text-center">
+          <Card className="text-center sm:w-[40%] m-auto mb-8 bg-black/10 backdrop-blur-sm">
             <h1 className="text-5xl font-bold mb-2">{name}</h1>
             <p className="text-xl text-muted-foreground">{caelesteName}</p>
-          </header>
+          </Card>
 
-          <div className="bg-card p-6 rounded-lg border">
-            {characterData ? (
-              <div
-                className="google-docs-content prose prose-lg max-w-none dark:prose-invert"
-                dangerouslySetInnerHTML={{ __html: characterData }}
-              />
-            ) : (
-              <div className="text-center py-8">
-                <p className="text-muted-foreground">
-                  No content loaded yet...
-                </p>
-                <p className="text-sm mt-2">
-                  Check browser console for debugging info
-                </p>
-              </div>
-            )}
-          </div>
+          <Carousel
+            className="w-screen -left-8 sm:-left-27.5"
+            opts={{ loop: true, dragFree: true }}
+            plugins={[
+              Autoplay({
+                delay: 2000,
+                stopOnInteraction: false,
+              }),
+            ]}
+          >
+            <CarouselContent>
+              {imagesArray.map((imgSrc, index) => {
+                return (
+                  <CarouselItem
+                    key={index}
+                    className="basis-1/2 md:basis-1/3 lg:basis-1/4"
+                  >
+                    <div className="p-1">
+                      <Card className="bg-black/10 backdrop-blur-sm border border-white/10">
+                        <CardContent className="flex aspect-square items-center justify-center p-6">
+                          <Image
+                            className="aspect-square object-cover rounded-lg"
+                            src={imgSrc}
+                            alt={`Image ${index + 1}`}
+                            fill
+                          />
+                        </CardContent>
+                      </Card>
+                    </div>
+                  </CarouselItem>
+                );
+              })}
+            </CarouselContent>
+          </Carousel>
 
           {/* Debug: Show parsed sections */}
-          <div className="bg-card p-6 rounded-lg border">
-            <h2 className="text-2xl font-bold mb-4">
-              Parsed Character Sections
-            </h2>
+          <Card className="p-6 bg-black/10 backdrop-blur-sm">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {nameSection && (
                 <div className="border p-3 rounded">
@@ -384,7 +486,7 @@ export default function VesperPage() {
                 </div>
               )}
             </div>
-          </div>
+          </Card>
         </div>
       </main>
     </div>

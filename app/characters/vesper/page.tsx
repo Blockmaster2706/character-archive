@@ -4,6 +4,7 @@ import { CustomMenubar } from "@/components/menubar";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { putCharacterInLocalstorage } from "../localstorage";
 
 export default function VesperPage() {
   const router = useRouter();
@@ -12,6 +13,8 @@ export default function VesperPage() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    putCharacterInLocalstorage("vesper");
+
     const fetchCharacterData = async () => {
       try {
         setLoading(true);
