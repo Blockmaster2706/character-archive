@@ -237,11 +237,11 @@ Ein kurzer Augenblick — dann breitet sich die Szenerie vor dir aus.`;
   }, []);
 
   const imagesArray = [
-    "/images/characters/pr3_1/1.jpg",
-    "/images/characters/pr3_1/2.jpg",
-    "/images/characters/pr3_1/3.jpg",
-    "/images/characters/pr3_1/4.jpg",
-    "/images/characters/pr3_1/5.jpg",
+    "/images/characters/aurelia/1.jpg",
+    "/images/characters/aurelia/2.jpg",
+    "/images/characters/aurelia/3.jpg",
+    "/images/characters/aurelia/4.jpg",
+    "/images/characters/aurelia/5.jpg",
   ];
 
   if (loading) {
