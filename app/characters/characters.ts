@@ -7,9 +7,9 @@ type character = {
 
 export const characters: character[] = [
   {
-    name: "Name",
-    slug: "pr3_1",
-    image: "/images/characters/pr3_1/1.jpg",
+    name: "Aurelia Farewell",
+    slug: "aurelia",
+    image: "/images/characters/aurelia/1.jpg",
     doclink:
       "https://docs.google.com/document/d/1etQvt51cb8_IZ1aFwcWLfETJTXHkS7i9bvBldr27i-E/edit?usp=sharing",
   },
