@@ -100,6 +100,8 @@ export default function PR3_1Page() {
             .trim()
             .replace(/\[.*?\]/, "")
             .replace(/\-.*\- PR3/, "")
+            .replace("Updated automatically every 5 minutes", "")
+            .replace("Automatisch alle 5 Minuten aktualisiert", "")
             .trim()
         );
 
