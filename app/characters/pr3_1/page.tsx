@@ -336,14 +336,8 @@ Ein kurzer Augenblick — dann breitet sich die Szenerie vor dir aus.`;
           </Button>
         </div>
 
-        <div className="space-y-8">
-          <Card className="text-center sm:w-[40%] m-auto mb-8 bg-black/10 backdrop-blur-sm">
-            <h1 className="text-5xl font-bold mb-2">{name}</h1>
-            <p className="text-xl text-muted-foreground">{caelesteName}</p>
-          </Card>
-
           <Carousel
-            className="w-screen -left-8 sm:-left-27.5"
+            className="absolute w-screen left-0 mb-20"
             opts={{ loop: true, dragFree: true }}
             plugins={[
               Autoplay({
@@ -376,9 +370,15 @@ Ein kurzer Augenblick — dann breitet sich die Szenerie vor dir aus.`;
               })}
             </CarouselContent>
           </Carousel>
+        <div className="space-y-8 mt-20">
+
+          <Card className="text-center sm:w-[40%] m-auto mb-8 bg-black/10 backdrop-blur-sm">
+            <h1 className="text-5xl font-bold mb-2">{name}</h1>
+            <p className="text-xl text-muted-foreground">{caelesteName}</p>
+          </Card>
 
           {/* Debug: Show parsed sections */}
-          <Card className="p-6 bg-black/10 backdrop-blur-sm">
+          <Card className="p-6 mt-20 sm:mt-30 bg-black/10 backdrop-blur-sm">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {nameSection && (
                 <div className="border p-3 rounded">
