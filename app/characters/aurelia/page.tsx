@@ -221,11 +221,11 @@ export default function PR3_1Page() {
 
   const [showAnimation, setShowAnimation] = useState(false);
   const [showSheet, setShowSheet] = useState(false);
-  const animationContent: string = `Ein leises Knistern erfüllt die Luft.
-Ein Blatt segelt durch den Abendwind.
-Die Gestalt hebt den Blick und lächelt im Halbdunkel.
-Langsam öffnet sich ein altes Buch, und Worte fließen hervor.
-Ein kurzer Augenblick — dann breitet sich die Szenerie vor dir aus.`;
+  const animationContent: string = `Ein leiser Kamin knistert im Hintergrund.
+Der Duft von Espresso erfüllt den Raum.
+Draußen fallen die ersten Blätter, und werden vom Wind verweht.
+"Willkommen zurück," sagt eine vertraute Stimme.
+Du blickst zu ihr, und dein Blick trifft auf zwei nussbraune Augen.`;
 
   useEffect(() => {
     setTimeout(() => {
@@ -308,13 +308,13 @@ Ein kurzer Augenblick — dann breitet sich die Szenerie vor dir aus.`;
       <CustomMenubar />
       <main className="max-w-4xl mx-auto mt-8 z-0">
         <div
-          className={`absolute top-16 sm:top-20 left-0 w-full bg-orange-950 transition-opacity duration-1000 ${
+          className={`absolute top-16 sm:top-20 left-0 w-full bg-orange-950 transition-opacity duration-[1500ms] ${
             !showSheet
               ? `opacity-100 z-40 pointer-events-auto`
-              : "opacity-0 -z-50 pointer-events-none"
+              : "opacity-0 z-40 pointer-events-none"
           }`}
         >
-          {showAnimation && !showSheet && (
+           
             <div className="animate-fade-out pointer-events-none p-8 sm:p-20 h-screen">
               <Card className="p-6 bg-black/10 backdrop-blur-sm">
                 <div className="text-lg font-mono flex items-center gap-2">
@@ -324,7 +324,7 @@ Ein kurzer Augenblick — dann breitet sich die Szenerie vor dir aus.`;
                 </div>
               </Card>
             </div>
-          )}
+          
         </div>
         <div
           className={`opacity-100 ${
