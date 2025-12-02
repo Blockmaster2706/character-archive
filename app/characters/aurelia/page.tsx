@@ -276,7 +276,7 @@ Ein kurzer Augenblick — dann breitet sich die Szenerie vor dir aus.`;
     return (
       <div className="font-sans min-h-screen p-8 pb-20 gap-16 sm:p-20">
         <CustomMenubar />
-        <main className="max-w-4xl mx-auto mt-8">
+        <main className="max-w-4xl max-h-screen mx-auto mt-8">
           <div className="mb-6">
             <Button
               variant="outline"
@@ -304,11 +304,11 @@ Ein kurzer Augenblick — dann breitet sich die Szenerie vor dir aus.`;
   }
 
   return (
-    <div className="font-sans min-h-screen p-8 pb-20 gap-16 sm:p-20 bg-orange-950">
+    <div className={"font-sans min-h-screen p-8 pb-20 gap-16 sm:p-20 bg-orange-950" + (!showSheet ? " max-h-screen overflow-hidden" : "")}>
       <CustomMenubar />
       <main className="max-w-4xl mx-auto mt-8 z-0">
         <div
-          className={`absolute top-16 sm:top-20 left-0 w-full h-screen bg-orange-950 transition-opacity duration-1000 ${
+          className={`absolute top-16 sm:top-20 left-0 w-full bg-orange-950 transition-opacity duration-1000 ${
             !showSheet
               ? `opacity-100 z-40 pointer-events-auto`
               : "opacity-0 -z-50 pointer-events-none"
