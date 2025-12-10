@@ -3,7 +3,7 @@
 import { CustomMenubar } from "@/components/menubar";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useTheme } from "next-themes";
 import { putCharacterInLocalstorage } from "../localstorage";
 import { Card, CardContent } from "@/components/ui/card";
@@ -15,6 +15,8 @@ import {
 } from "@/components/ui/carousel";
 import Autoplay from "embla-carousel-autoplay";
 import Image from "next/image";
+import { Lobster } from "next/font/google";
+const lobster = Lobster({ weight: "400", subsets: ["latin"] });
 
 export default function PR3_1Page() {
   const router = useRouter();
@@ -249,12 +251,67 @@ Du blickst zu ihr, und dein Blick trifft auf zwei nussbraune Augen.`;
     }, showSheetTimeout);
   }, []);
 
+  // Refs for auto-sizing text
+  const nameRef = useRef<HTMLHeadingElement>(null);
+  const caelesteRef = useRef<HTMLParagraphElement>(null);
+  const [nameFontSize, setNameFontSize] = useState(48); // 3rem = 48px
+  const [caelesteFontSize, setCaelesteFontSize] = useState(36); // 1.875rem = 30px
+
+  // Auto-adjust font size to fit card width
+  useEffect(() => {
+    const adjustFontSize = () => {
+      if (nameRef.current) {
+        const container = nameRef.current.parentElement;
+        if (container) {
+          let fontSize = 48;
+          nameRef.current.style.fontSize = `${fontSize}px`;
+
+          while (
+            nameRef.current.scrollWidth > container.clientWidth &&
+            fontSize > 16
+          ) {
+            fontSize -= 1;
+            nameRef.current.style.fontSize = `${fontSize}px`;
+          }
+          setNameFontSize(fontSize);
+        }
+      }
+
+      if (caelesteRef.current) {
+        const container = caelesteRef.current.parentElement;
+        if (container) {
+          let fontSize = 36;
+          caelesteRef.current.style.fontSize = `${fontSize}px`;
+
+          while (
+            caelesteRef.current.scrollWidth > container.clientWidth &&
+            fontSize > 16
+          ) {
+            fontSize -= 1;
+            caelesteRef.current.style.fontSize = `${fontSize}px`;
+          }
+          setCaelesteFontSize(fontSize);
+        }
+      }
+    };
+
+    // Adjust on load and when content changes
+    if (nameSection || caelesteName) {
+      setTimeout(adjustFontSize, 100);
+    }
+
+    // Adjust on window resize
+    window.addEventListener("resize", adjustFontSize);
+    return () => window.removeEventListener("resize", adjustFontSize);
+  }, [nameSection, caelesteName]);
+
   const imagesArray = [
     "/images/characters/ozeria/1.jpg",
     "/images/characters/ozeria/2.jpg",
     "/images/characters/ozeria/3.jpg",
     "/images/characters/ozeria/4.jpg",
     "/images/characters/ozeria/5.jpg",
+    "/images/characters/ozeria/7.jpg",
   ];
 
   if (loading) {
@@ -316,17 +373,20 @@ Du blickst zu ihr, und dein Blick trifft auf zwei nussbraune Augen.`;
     );
   }
 
+  const subSectionClassName = `text-lg text-purple-500 ${lobster.className} text-sm`;
+
   return (
     <div
       className={
-        "font-sans min-h-screen p-8 pb-20 gap-16 sm:p-20 bg-purple-950" +
+        "font-sans min-h-screen p-8 pb-20 gap-16 sm:p-20 bg-purple-950/50" +
         (!showSheet ? " max-h-screen overflow-hidden" : "")
       }
     >
       <CustomMenubar />
       <main className="max-w-4xl mx-auto mt-8 z-0">
+        <div className="-z-200 bg-black" />
         <div
-          className={`absolute top-16 sm:top-20 left-0 w-full bg-purple-950 transition-opacity duration-[1500ms] ${
+          className={`absolute top-16 sm:top-20 left-0 w-full bg-purple-950/50 transition-opacity duration-[1500ms] ${
             !showSheet
               ? `opacity-100 z-40 pointer-events-auto`
               : "opacity-0 z-40 pointer-events-none"
@@ -344,8 +404,10 @@ Du blickst zu ihr, und dein Blick trifft auf zwei nussbraune Augen.`;
         </div>
         <div
           className={`opacity-100 ${
-            loading ? "pointer-events-none z-50" : "opacity-0 -z-50"
-          } absolute top-0 left-0 w-screen h-screen bg-gray-900 transition-opacity duration-500`}
+            loading
+              ? "pointer-events-none z-50 bg-gray-900"
+              : "opacity-0 -z-50 bg-transparent"
+          } absolute top-0 left-0 w-screen h-screen transition-opacity duration-500`}
         ></div>
         <div className="mb-6">
           <Button variant="outline" onClick={() => router.push("/characters")}>
@@ -388,13 +450,46 @@ Du blickst zu ihr, und dein Blick trifft auf zwei nussbraune Augen.`;
           </CarouselContent>
         </Carousel>
         <div className="space-y-8 mt-20">
-          <Card className="text-center sm:w-[40%] m-auto mb-8 bg-black/10 backdrop-blur-sm">
-            <h1 className="text-5xl font-bold mb-2">{nameSection}</h1>
-            <p className="text-xl text-muted-foreground">{caelesteName}</p>
+          <Card
+            className={`${lobster.className} text-center w-auto sm:w-[70%] md:w-[50%] m-auto mb-8 bg-black/10 backdrop-blur-sm overflow-hidden`}
+          >
+            <h1
+              ref={nameRef}
+              className="font-bold text-purple-500 px-4 whitespace-nowrap"
+              style={{ fontSize: `${nameFontSize}px` }}
+            >
+              {nameSection}
+            </h1>
+            <p
+              ref={caelesteRef}
+              className="text-purple-500/90 px-4 pb-4 whitespace-nowrap"
+              style={{ fontSize: `${caelesteFontSize}px` }}
+            >
+              {caelesteName}
+            </p>
           </Card>
 
           {/* Debug: Show parsed sections */}
           <Card className="p-6 mt-20 sm:mt-30 bg-black/10 backdrop-blur-sm">
+            <div className="border p-3 rounded flex gap-4 mb-6">
+              <div className="flex-1 flex flex-col gap-3">
+                <p className="flex flex-col">
+                  <h3 className={subSectionClassName}>Name</h3>
+                  {nameSection}
+                </p>
+                <p className="flex flex-col">
+                  <h3 className={subSectionClassName}>Spitznamen </h3>
+                  {basicInfoSection.Spitzname}
+                </p>
+              </div>
+              <Image
+                className="rounded-md"
+                src={"/images/characters/ozeria/1.jpg"}
+                alt="Character Image"
+                width={200}
+                height={300}
+              />
+            </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {nameSection && (
                 <div className="border p-3 rounded">
