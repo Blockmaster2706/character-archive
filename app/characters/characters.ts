@@ -7,11 +7,11 @@ type character = {
 
 export const characters: character[] = [
   {
-    name: "Aurelia Farewell",
-    slug: "aurelia",
-    image: "/images/characters/aurelia/1.jpg",
+    name: "Ozeria Lavigne",
+    slug: "ozeria",
+    image: "/images/characters/ozeria/1.jpg",
     doclink:
-      "https://docs.google.com/document/d/1etQvt51cb8_IZ1aFwcWLfETJTXHkS7i9bvBldr27i-E/edit?usp=sharing",
+      "https://docs.google.com/document/d/1RiGc-1Q7OYKkZCLbqpSyonqdVaoCEpSBlxPZHgh-iZc/edit?usp=sharing",
   },
   {
     name: "Vesper Davis [DEMO]",
