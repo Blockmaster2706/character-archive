@@ -244,7 +244,7 @@ Draußen fallen die ersten Blätter, und werden vom Wind verweht.
 "Willkommen zurück," sagt eine vertraute Stimme.
 Du blickst zu ihr, und dein Blick trifft auf zwei nussbraune Augen.`;
 
-  const showSheetTimeout = 500 ?? 20500;
+  const showSheetTimeout = 20500;
   useEffect(() => {
     setTimeout(() => {
       setShowSheet(true);
