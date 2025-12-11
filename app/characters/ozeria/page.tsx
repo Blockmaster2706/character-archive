@@ -16,6 +16,7 @@ import {
 import Autoplay from "embla-carousel-autoplay";
 import Image from "next/image";
 import { Lobster } from "next/font/google";
+import BasicInfoSection from "./BasicInfoSection";
 const lobster = Lobster({ weight: "400", subsets: ["latin"] });
 
 export default function PR3_1Page() {
@@ -119,7 +120,11 @@ export default function PR3_1Page() {
       // Extract Basic Info section
       const basicInfoMatch = text.match(/『Basic Info』([\s\S]*?)(?=『|$)/);
       if (basicInfoMatch) {
-        const parsed = parseSectionContent(basicInfoMatch[1]);
+        const parsed = parseSectionContent(
+          basicInfoMatch[1]
+            .replace(" , ", ", ")
+            .replace("LoL Evelynn deutsche Stimme", "{BUTTON}")
+        );
         if (typeof parsed === "object") setBasicInfoSection(parsed);
       }
 
@@ -244,7 +249,7 @@ Draußen fallen die ersten Blätter, und werden vom Wind verweht.
 "Willkommen zurück," sagt eine vertraute Stimme.
 Du blickst zu ihr, und dein Blick trifft auf zwei nussbraune Augen.`;
 
-  const showSheetTimeout = 20500;
+  const showSheetTimeout = 500 ?? 20500;
   useEffect(() => {
     setTimeout(() => {
       setShowSheet(true);
@@ -449,9 +454,9 @@ Du blickst zu ihr, und dein Blick trifft auf zwei nussbraune Augen.`;
             })}
           </CarouselContent>
         </Carousel>
-        <div className="space-y-8 mt-20">
+        <div className="space-y-8 mt-40 sm:mt-20">
           <Card
-            className={`${lobster.className} text-center w-auto sm:w-[70%] md:w-[50%] m-auto mb-8 bg-black/10 backdrop-blur-sm overflow-hidden`}
+            className={`${lobster.className} text-center w-auto sm:w-[70%] md:w-[50%] m-auto sm:mb-8 bg-black/10 backdrop-blur-sm overflow-hidden`}
           >
             <h1
               ref={nameRef}
@@ -470,47 +475,13 @@ Du blickst zu ihr, und dein Blick trifft auf zwei nussbraune Augen.`;
           </Card>
 
           {/* Debug: Show parsed sections */}
-          <Card className="p-6 mt-20 sm:mt-30 bg-black/10 backdrop-blur-sm">
-            <div className="border p-3 rounded flex gap-4 mb-6">
-              <div className="flex-1 flex flex-col gap-3">
-                <p className="flex flex-col">
-                  <sub className={subSectionClassName}>Name</sub>
-                  {nameSection}
-                </p>
-                <p className="flex flex-col">
-                  <sub className={subSectionClassName}>Spitznamen </sub>
-                  {basicInfoSection.Spitzname}
-                </p>
-              </div>
-              <Image
-                className="rounded-md"
-                src={"/images/characters/ozeria/1.jpg"}
-                alt="Character Image"
-                width={200}
-                height={300}
-              />
-            </div>
+          <Card className="p-6 mt-10 sm:mt-30 bg-black/10 backdrop-blur-sm">
+            <BasicInfoSection
+              subSectionClassName={subSectionClassName}
+              nameSection={nameSection}
+              basicInfoSection={basicInfoSection}
+            />
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {nameSection && (
-                <div className="border p-3 rounded">
-                  <h3 className="font-bold">tName</h3>
-                  <pre className="text-sm whitespace-pre-wrap">
-                    {nameSection}
-                  </pre>
-                </div>
-              )}
-              {Object.keys(basicInfoSection).length > 0 && (
-                <div className="border p-3 rounded">
-                  <h3 className="font-bold">tBasic Info</h3>
-                  <div className="text-sm space-y-1">
-                    {Object.entries(basicInfoSection).map(([key, value]) => (
-                      <div key={key}>
-                        <span className="font-medium">t{key}:</span> {value}
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
               {caelesteSection && (
                 <div className="border p-3 rounded">
                   <h3 className="font-bold">tCaeleste</h3>

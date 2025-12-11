@@ -22,6 +22,7 @@ export const metadata: Metadata = {
 };
 
 import { ThemeProvider } from "@/components/theme-provider";
+import { AudioProvider } from "@/components/audio/provider";
 
 export default function RootLayout({
   children,
@@ -41,7 +42,7 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            {children}
+            <AudioProvider>{children}</AudioProvider>
           </ThemeProvider>
         </body>
       </html>

@@ -1,3 +1,4 @@
+import { AudioProvider } from "@/components/audio/provider";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -16,5 +17,5 @@ export default function OzeriaLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return children;
+  return <AudioProvider>{children}</AudioProvider>;
 }
