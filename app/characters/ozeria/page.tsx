@@ -392,7 +392,7 @@ Du blickst zu ihr, und dein Blick trifft auf zwei nussbraune Augen.`;
               : "opacity-0 z-40 pointer-events-none"
           }`}
         >
-          <div className="animate-fade-out pointer-events-none p-8 sm:p-20 h-screen">
+          <div className="animate-fade-out pointer-events-none bg-purple-950 p-8 sm:p-20 -mt-20 h-screen">
             <Card className="p-6 bg-black/10 backdrop-blur-sm">
               <div className="text-lg font-mono flex items-center gap-2">
                 <span>
@@ -474,11 +474,11 @@ Du blickst zu ihr, und dein Blick trifft auf zwei nussbraune Augen.`;
             <div className="border p-3 rounded flex gap-4 mb-6">
               <div className="flex-1 flex flex-col gap-3">
                 <p className="flex flex-col">
-                  <h3 className={subSectionClassName}>Name</h3>
+                  <sub className={subSectionClassName}>Name</sub>
                   {nameSection}
                 </p>
                 <p className="flex flex-col">
-                  <h3 className={subSectionClassName}>Spitznamen </h3>
+                  <sub className={subSectionClassName}>Spitznamen </sub>
                   {basicInfoSection.Spitzname}
                 </p>
               </div>
