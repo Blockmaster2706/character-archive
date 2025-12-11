@@ -391,7 +391,7 @@ Du blickst zu ihr, und dein Blick trifft auf zwei nussbraune Augen.`;
       <main className="max-w-4xl mx-auto mt-8 z-0">
         <div className="-z-200 bg-black" />
         <div
-          className={`absolute top-16 sm:top-20 left-0 w-full bg-purple-950/50 transition-opacity duration-[1500ms] ${
+          className={`absolute top-16 sm:top-20 left-0 w-full bg-purple-950/50 transition-opacity duration-1500 ${
             !showSheet
               ? `opacity-100 z-40 pointer-events-auto`
               : "opacity-0 z-40 pointer-events-none"
