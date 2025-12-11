@@ -81,13 +81,12 @@ export default function BasicInfoSection({
             <sub className={subSectionClassName}>Stimme </sub>
             {basicInfoSection.Stimme.replace("{BUTTON}", "")}
           </p>
-          <AudioPlayer className="mt-4">
+          <AudioPlayer className="mt-4 bg-purple-950/50 rounded-md p-2">
             <AudioPlayerControlBar>
               <AudioPlayerControlGroup>
                 <AudioPlayerPlay />
-                <AudioPlayerTimeDisplay />
                 <AudioPlayerSeekBar />
-                <AudioPlayerTimeDisplay remaining />
+                <AudioPlayerTimeDisplay />
                 <AudioPlayerVolume />
               </AudioPlayerControlGroup>
             </AudioPlayerControlBar>
