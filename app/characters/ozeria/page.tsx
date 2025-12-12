@@ -17,6 +17,8 @@ import Autoplay from "embla-carousel-autoplay";
 import Image from "next/image";
 import { Lobster } from "next/font/google";
 import BasicInfoSection from "./BasicInfoSection";
+import AussehenInfoSection from "./AussehenInfoSection";
+import KleidungSection from "./KleidungSection";
 const lobster = Lobster({ weight: "400", subsets: ["latin"] });
 
 export default function PR3_1Page() {
@@ -249,7 +251,7 @@ Draußen fallen die ersten Blätter, und werden vom Wind verweht.
 "Willkommen zurück," sagt eine vertraute Stimme.
 Du blickst zu ihr, und dein Blick trifft auf zwei nussbraune Augen.`;
 
-  const showSheetTimeout = 500 ?? 20500;
+  const showSheetTimeout = 20500;
   useEffect(() => {
     setTimeout(() => {
       setShowSheet(true);
@@ -481,6 +483,14 @@ Du blickst zu ihr, und dein Blick trifft auf zwei nussbraune Augen.`;
               nameSection={nameSection}
               basicInfoSection={basicInfoSection}
             />
+            <AussehenInfoSection
+              subSectionClassName={subSectionClassName}
+              aussehenInfoSection={aussehenSection}
+            />
+            <KleidungSection
+              subSectionClassName={subSectionClassName}
+              kleidungSection={kleidungSection}
+            />
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {caelesteSection && (
                 <div className="border p-3 rounded">
@@ -496,34 +506,10 @@ Du blickst zu ihr, und dein Blick trifft auf zwei nussbraune Augen.`;
                   </div>
                 </div>
               )}
-              {Object.keys(aussehenSection).length > 0 && (
-                <div className="border p-3 rounded">
-                  <h3 className="font-bold">tAussehen</h3>
-                  <div className="text-sm space-y-1">
-                    {Object.entries(aussehenSection).map(([key, value]) => (
-                      <div key={key}>
-                        <span className="font-medium">t{key}:</span> {value}
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
               {inventarSection && (
                 <div className="border p-3 rounded">
                   <h3 className="font-bold">tInventar</h3>
                   <div className="text-sm">{inventarSection}</div>
-                </div>
-              )}
-              {Object.keys(kleidungSection).length > 0 && (
-                <div className="border p-3 rounded">
-                  <h3 className="font-bold">tKleidung</h3>
-                  <div className="text-sm space-y-1">
-                    {Object.entries(kleidungSection).map(([key, value]) => (
-                      <div key={key}>
-                        <span className="font-medium">t{key}:</span> {value}
-                      </div>
-                    ))}
-                  </div>
                 </div>
               )}
               {persoenlichkeitSection && (
