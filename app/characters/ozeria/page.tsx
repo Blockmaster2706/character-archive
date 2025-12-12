@@ -17,8 +17,8 @@ import Autoplay from "embla-carousel-autoplay";
 import Image from "next/image";
 import { Lobster } from "next/font/google";
 import BasicInfoSection from "./BasicInfoSection";
-import AussehenInfoSection from "./AussehenInfoSection";
 import KleidungSection from "./KleidungSection";
+import AussehenInfoSection from "./AussehenInfoSection";
 const lobster = Lobster({ weight: "400", subsets: ["latin"] });
 
 export default function PR3_1Page() {
