@@ -1,22 +1,10 @@
 import {
-  AudioPlayer,
-  AudioPlayerControlBar,
-  AudioPlayerControlGroup,
-  AudioPlayerPlay,
-  AudioPlayerSeekBar,
-  AudioPlayerTimeDisplay,
-  AudioPlayerVolume,
-} from "@/components/audio/player";
-import {
   Carousel,
   CarouselContent,
   CarouselItem,
 } from "@/components/ui/carousel";
-import { Track } from "@/lib/audio";
-import { useAudioStore } from "@/lib/audio-store";
 import Autoplay from "embla-carousel-autoplay";
 import Image from "next/image";
-import { useEffect } from "react";
 
 export default function KleidungSection({
   subSectionClassName,
@@ -25,31 +13,6 @@ export default function KleidungSection({
   subSectionClassName: string;
   kleidungSection: Record<string, string>;
 }) {
-  const setTrack = useAudioStore((s) => s.setCurrentTrack);
-
-  useEffect(() => {
-    // This effect is to ensure that the AudioPlayer works correctly on mount
-    const newQueue: Track[] = [
-      {
-        title: "Ozeria Voice Sample",
-        url: "/assets/ozeria-voice-sample.m4a",
-        duration: 15,
-      },
-    ];
-
-    // Subscribe to changes (returns unsubscribe function)
-    const unsubscribe = useAudioStore.subscribe(
-      (s) => s.isPlaying,
-      (isPlaying) => console.log("Playing:", isPlaying)
-    );
-
-    setTrack(newQueue[0]);
-
-    return () => {
-      unsubscribe();
-    };
-  }, []);
-
   return (
     <div>
       {/* (DESKTOP) Basic Info Section in a highlighted box */}

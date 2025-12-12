@@ -221,7 +221,7 @@ export default function PR3_1Page() {
     fetchCharacterData();
   }, []);
 
-  const [showAnimation, setShowAnimation] = useState(false);
+  const [_, setShowAnimation] = useState(false);
   const [showSheet, setShowSheet] = useState(false);
   const animationContent: string = `Ein leiser Kamin knistert im Hintergrund.
 Der Duft von Espresso erfüllt den Raum.
@@ -306,7 +306,12 @@ Du blickst zu ihr, und dein Blick trifft auf zwei nussbraune Augen.`;
   }
 
   return (
-    <div className={"font-sans min-h-screen p-8 pb-20 gap-16 sm:p-20 bg-orange-950" + (!showSheet ? " max-h-screen overflow-hidden" : "")}>
+    <div
+      className={
+        "font-sans min-h-screen p-8 pb-20 gap-16 sm:p-20 bg-orange-950" +
+        (!showSheet ? " max-h-screen overflow-hidden" : "")
+      }
+    >
       <CustomMenubar />
       <main className="max-w-4xl mx-auto mt-8 z-0">
         <div
@@ -316,17 +321,15 @@ Du blickst zu ihr, und dein Blick trifft auf zwei nussbraune Augen.`;
               : "opacity-0 z-40 pointer-events-none"
           }`}
         >
-           
-            <div className="animate-fade-out pointer-events-none p-8 sm:p-20 h-screen">
-              <Card className="p-6 bg-black/10 backdrop-blur-sm">
-                <div className="text-lg font-mono flex items-center gap-2">
-                  <span>
-                    <TypingText text={animationContent}></TypingText>
-                  </span>
-                </div>
-              </Card>
-            </div>
-          
+          <div className="animate-fade-out pointer-events-none p-8 sm:p-20 h-screen">
+            <Card className="p-6 bg-black/10 backdrop-blur-sm">
+              <div className="text-lg font-mono flex items-center gap-2">
+                <span>
+                  <TypingText text={animationContent}></TypingText>
+                </span>
+              </div>
+            </Card>
+          </div>
         </div>
         <div
           className={`opacity-100 ${
@@ -339,42 +342,41 @@ Du blickst zu ihr, und dein Blick trifft auf zwei nussbraune Augen.`;
           </Button>
         </div>
 
-          <Carousel
-            className="absolute w-screen left-0 mb-20"
-            opts={{ loop: true, dragFree: true }}
-            plugins={[
-              Autoplay({
-                delay: 2000,
-                stopOnInteraction: false,
-              }),
-            ]}
-          >
-            <CarouselContent>
-              {imagesArray.map((imgSrc, index) => {
-                return (
-                  <CarouselItem
-                    key={index}
-                    className="basis-1/2 md:basis-1/3 lg:basis-1/4"
-                  >
-                    <div className="p-1">
-                      <Card className="bg-black/10 backdrop-blur-sm border border-white/10">
-                        <CardContent className="flex aspect-square items-center justify-center p-6">
-                          <Image
-                            className="aspect-square object-cover rounded-lg"
-                            src={imgSrc}
-                            alt={`Image ${index + 1}`}
-                            fill
-                          />
-                        </CardContent>
-                      </Card>
-                    </div>
-                  </CarouselItem>
-                );
-              })}
-            </CarouselContent>
-          </Carousel>
+        <Carousel
+          className="absolute w-screen left-0 mb-20"
+          opts={{ loop: true, dragFree: true }}
+          plugins={[
+            Autoplay({
+              delay: 2000,
+              stopOnInteraction: false,
+            }),
+          ]}
+        >
+          <CarouselContent>
+            {imagesArray.map((imgSrc, index) => {
+              return (
+                <CarouselItem
+                  key={index}
+                  className="basis-1/2 md:basis-1/3 lg:basis-1/4"
+                >
+                  <div className="p-1">
+                    <Card className="bg-black/10 backdrop-blur-sm border border-white/10">
+                      <CardContent className="flex aspect-square items-center justify-center p-6">
+                        <Image
+                          className="aspect-square object-cover rounded-lg"
+                          src={imgSrc}
+                          alt={`Image ${index + 1}`}
+                          fill
+                        />
+                      </CardContent>
+                    </Card>
+                  </div>
+                </CarouselItem>
+              );
+            })}
+          </CarouselContent>
+        </Carousel>
         <div className="space-y-8 mt-20">
-
           <Card className="text-center sm:w-[40%] m-auto mb-8 bg-black/10 backdrop-blur-sm">
             <h1 className="text-5xl font-bold mb-2">{nameSection}</h1>
             <p className="text-xl text-muted-foreground">{caelesteName}</p>
